@@ -18,8 +18,5 @@ A high-performance C++ SDK generator for Rocket League (Unreal Engine 3). It sca
 ---
 *Disclaimer: This tool is for educational and research purposes only. Psyonix has stated that they allow this, for offline modding. Use at your own risk, and be aware of legal consequences.*
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Contact
-For any questions or inquiries, please contact 0ekn on Discord.
+For any questions or inquiries, please contact rlsdk on Discord.
