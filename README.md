@@ -11,8 +11,8 @@ A high-performance C++ SDK generator for Rocket League (Unreal Engine 3). It sca
 
 ## Usage
 1. Build the solution (`RLSDKGenerator.sln`) in Release x64 mode.
-2. Launch Rocket League without EAC enabled. (use -noeac launch option)
-3. Inject the resulting `RLSDKGenerator.dll` into Rocket League (Using any injector, EX: https://github.com/rlsdkRL/CMInjector).
+2. Launch Rocket League without EAC enabled. (use -noeac launch option).
+3. Inject the resulting `RLSDKGenerator.dll` into Rocket League (Using any injector).
 4. Check the `RLSDKGenerator` folder in the game directory for the generated headers.
 
 ---
