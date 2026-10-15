@@ -1,0 +1,50 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.doccache
+*.VC.db
+*.VC.opendb
+
+# Build artifacts
+x64/
+Debug/
+Release/
+ipch/
+*.obj
+*.pch
+*.pdb
+*.tlog
+*.lastbuildstate
+*.idb
+*.log
+
+# Misc
+*.tmp
+.DS_Store
+
+# Public source release
+/tools/
+build/
+out/
+assets/*.svg
+*.dll
+*.exe
+*.lib
+*.exp
+*.ilk
+*.iobj
+*.ipdb
+*.rar
+*.zip
+.env*
+*.pem
+*.key
+*.pfx
+*.p12
+SDK_HEADERS/
+SDK_SOURCE/
+NameDump.txt
+ObjectDump.txt
+
+.sdk_cache/

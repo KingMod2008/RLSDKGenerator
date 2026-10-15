@@ -1,0 +1,373 @@
+#include "Configuration.hpp"
+#include "PiecesOfCode.hpp"
+
+/*
+# ========================================================================================= #
+# Cosmetics
+# ========================================================================================= #
+*/
+
+uint32_t GConfig::m_constantSpacing = 60;
+
+uint32_t GConfig::m_commentSpacing = 30;
+
+uint32_t GConfig::m_enumSpacing = 50;
+
+uint32_t GConfig::m_classSpacing = 50;
+
+uint32_t GConfig::m_structSpacing = 50;
+
+uint32_t GConfig::m_functionSpacing = 50;
+
+uint32_t GConfig::GetConstSpacing()
+{
+    return m_constantSpacing;
+}
+
+uint32_t GConfig::GetCommentSpacing()
+{
+    return m_commentSpacing;
+}
+
+uint32_t GConfig::GetEnumSpacing()
+{
+    return m_enumSpacing;
+}
+
+uint32_t GConfig::GetClassSpacing()
+{
+    return m_classSpacing;
+}
+
+uint32_t GConfig::GetStructSpacing()
+{
+    return m_structSpacing;
+}
+
+uint32_t GConfig::GetFunctionSpacing()
+{
+    return m_functionSpacing;
+}
+
+/*
+# ========================================================================================= #
+# Generator Settings
+# ========================================================================================= #
+*/
+
+// If set to true this will auto include "Windows.h" in your sdk, along with renaming some windows functions that could conflict with windows macros.
+bool GConfig::m_useWindows = true;
+
+// If you want to use objects internal integer for finding static classes and functions, note that these will change every time the game updates.
+bool GConfig::m_useConstants = false;
+
+// If you want to remove the "iNative" index on functions before calling process event.
+bool GConfig::m_removeNativeIndex = false;
+
+// If you want to remove the "FUNC_Native" flag on functions before calling process event.
+bool GConfig::m_removeNativeFlags = false;
+
+// If you want the EFunctionFlags, EPropertyFlags, and EObjectFlags enums so be printed in the final sdk.
+bool GConfig::m_printEnumFlags = true;
+
+// If you want to use strongly typed enum classes over normal ones.
+bool GConfig::m_useEnumClasses = true;
+
+// Underlying enum type if you set "m_useEnumClasses" to true.
+std::string GConfig::m_enumClassType = "uint8_t";
+
+// Used to calculate property sizes and missed offsets.
+uint32_t GConfig::m_gameAlignment = 0x8;
+
+// Forced alignment used in the final sdk.
+uint32_t GConfig::m_finalAlignment = 0x8;
+
+// Names of classes or structs you don't want generated in the final sdk.
+std::vector<std::string> GConfig::m_blacklistedTypes = { "FPointer", "FQWord", "FScriptDelegate" };
+
+// Names of classes or structs you want to override with your own custom one.
+std::map<std::string, std::string> GConfig::m_typeOverrides = {
+    //{ "FExampleStruct", PiecesOfTypes::Example_Struct }
+};
+
+bool GConfig::UsingWindows()
+{
+    return m_useWindows;
+}
+
+bool GConfig::UsingConstants()
+{
+    return m_useConstants;
+}
+
+bool GConfig::RemoveNativeIndex()
+{
+    return m_removeNativeIndex;
+}
+
+bool GConfig::RemoveNativeFlags()
+{
+    return m_removeNativeFlags;
+}
+
+bool GConfig::PrintEnumFlags()
+{
+    return m_printEnumFlags;
+}
+
+bool GConfig::UsingEnumClasses()
+{
+    return m_useEnumClasses;
+}
+
+const std::string& GConfig::GetEnumClassType()
+{
+    return m_enumClassType;
+}
+
+uint32_t GConfig::GetGameAlignment()
+{
+    return m_gameAlignment;
+}
+
+uint32_t GConfig::GetFinalAlignment()
+{
+    return m_finalAlignment;
+}
+
+bool GConfig::IsTypeBlacklisted(const std::string& name)
+{
+    if (!m_blacklistedTypes.empty() && !name.empty())
+    {
+        return (std::find(m_blacklistedTypes.begin(), m_blacklistedTypes.end(), name) != m_blacklistedTypes.end());
+    }
+
+    return false;
+}
+
+bool GConfig::IsTypeOveridden(const std::string& name)
+{
+    if (!name.empty())
+    {
+        return m_typeOverrides.contains(name);
+    }
+
+    return false;
+}
+
+std::string GConfig::GetTypeOverride(const std::string& name)
+{
+    if (IsTypeOveridden(name))
+    {
+        return m_typeOverrides[name];
+    }
+
+    return "";
+}
+
+/*
+# ========================================================================================= #
+# Process Event
+# ========================================================================================= #
+*/
+
+// If you want to use "m_peIndex" change this to true, if not virutal voids will be generated from "m_peMask" and "m_pePattern".
+bool GConfig::m_usePeIndex = true;
+
+// Position where the process event function is in UObject's VfTable.
+int32_t GConfig::m_peIndex = 67;
+
+// Half byte mask, use question marks for unknown data.
+std::string GConfig::m_peMask = "xxx???x";
+
+// First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
+std::pair<uint8_t*, std::string> GConfig::m_pePattern = { (uint8_t*)"\x10\x11\x12\x00\x00\x00\x13", "\\x10\\x11\\x12\\x00\\x00\\x00\\x13" };
+
+bool GConfig::UsingProcessEventIndex()
+{
+    return (m_usePeIndex && (m_peIndex != -1));
+}
+
+int32_t GConfig::GetProcessEventIndex()
+{
+    return m_peIndex;
+}
+
+const std::string& GConfig::GetProcessEventMask()
+{
+    return m_peMask;
+}
+
+uint8_t* GConfig::GetProcessEventPattern()
+{
+    return m_pePattern.first;
+}
+
+const std::string& GConfig::GetProcessEventStr()
+{
+    return m_pePattern.second;
+}
+
+/*
+# ========================================================================================= #
+# Call Function
+# ========================================================================================= #
+*/
+
+// If you want to use "m_peIndex" change this to true, if not virutal voids will be generated from "m_peMask" and "m_pePattern".
+bool GConfig::m_useIndex = true;
+
+// Position where the process event function is in UObject's VfTable.
+int32_t GConfig::m_cfIndex = 76;
+
+// Half byte mask, use question marks for unknown data.
+std::string GConfig::m_cfMask = "xxx???x";
+
+// First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
+std::pair<uint8_t*, std::string> GConfig::m_cfPattern = { (uint8_t*)"\x10\x11\x12\x00\x00\x00\x13", "\\x10\\x11\\x12\\x00\\x00\\x00\\x13" };
+
+bool GConfig::UsingCallFunctionIndex()
+{
+    return (m_useIndex && (m_cfIndex != -1));
+}
+
+int32_t GConfig::GetCallFunctionIndex()
+{
+    return m_cfIndex;
+}
+
+const std::string& GConfig::GetCallFunctionMask()
+{
+    return m_cfMask;
+}
+
+uint8_t* GConfig::GetCallFunctionPattern()
+{
+    return m_cfPattern.first;
+}
+
+const std::string& GConfig::GetCallFunctionStr()
+{
+    return m_cfPattern.second;
+}
+
+/*
+# ========================================================================================= #
+# Global Objects & Names
+# ========================================================================================= #
+*/
+
+// If want to use offsets or patterns to initialize global objects and names.
+bool GConfig::m_useOffsets = false;
+
+uintptr_t GConfig::m_gobjectOffset = 0x1023630;
+
+// Half byte mask, use question marks for unknown data.
+std::string GConfig::m_gobjectMask = "xxx????xxxxxx";
+
+// First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
+std::pair<uint8_t*, std::string> GConfig::m_gobjectPattern = { (uint8_t*)"\x48\x8b\x05\x00\x00\x00\x00\x48\x8b\x34\xc8\x48\x8b", "\\x48\\x8b\\x05\\x00\\x00\\x00\\x00\\x48\\x8b\\x34\\xc8\\x48\\x8b" };
+
+uintptr_t GConfig::m_gnameOffset = 0x1035674;
+
+// Half byte mask, use question marks for unknown data.
+std::string GConfig::m_gnameMask = "xxx????xxxx";
+
+// First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
+std::pair<uint8_t*, std::string> GConfig::m_gnamePattern = { (uint8_t*)"\x48\x8b\x15\x00\x00\x00\x00\x4a\x89\x04\xc2", "\\x48\\x8b\\x15\\x00\\x00\\x00\\x00\\x4a\\x89\\x04\\xc2" };
+
+bool GConfig::UsingOffsets()
+{
+    return m_useOffsets;
+}
+
+uintptr_t GConfig::GetGObjectOffset()
+{
+    return m_gobjectOffset;
+}
+
+uint8_t* GConfig::GetGObjectPattern()
+{
+    return m_gobjectPattern.first;
+}
+
+const std::string& GConfig::GetGObjectStr()
+{
+    return m_gobjectPattern.second;
+}
+
+const std::string& GConfig::GetGObjectMask()
+{
+    return m_gobjectMask;
+}
+
+uintptr_t GConfig::GetGNameOffset()
+{
+    return m_gnameOffset;
+}
+
+uint8_t* GConfig::GetGNamePattern()
+{
+    return m_gnamePattern.first;
+}
+
+const std::string& GConfig::GetGNameStr()
+{
+    return m_gnamePattern.second;
+}
+
+const std::string& GConfig::GetGNameMask()
+{
+    return m_gnameMask;
+}
+
+/*
+# ========================================================================================= #
+# Game Info
+# ========================================================================================= #
+*/
+
+// Mainly just used for the printed headers at the top of each generated file.
+std::string GConfig::m_gameNameLong = "Rocket League";
+
+// This is used for the output folder name, along with the printed headers at the top of each file.
+std::string GConfig::m_gameNameShort = "RLSDK";
+
+// Optional, mainly for your own sake, like comparing sdks you generate or release to people.
+// kingmod : to get the real game ver u need to go to ur game launch options and add into it -log then run the game it should show console with the game it will show the game ver in first line like : Init: Version: 261001.2867.529371
+std::string GConfig::m_gameVersion = "261001.2867.529371";
+
+// Directory folder that your want your sdk to be generated in.
+std::filesystem::path GConfig::m_outputPath = "C:\\SDK\\";
+
+const std::string& GConfig::GetGameNameLong()
+
+{
+    return m_gameNameLong;
+}
+
+const std::string& GConfig::GetGameNameShort()
+{
+    return m_gameNameShort;
+}
+
+const std::string& GConfig::GetGameVersion()
+{
+    return m_gameVersion;
+}
+
+const std::filesystem::path& GConfig::GetOutputPath()
+{
+    return m_outputPath;
+}
+
+bool GConfig::HasOutputPath()
+{
+    return (!GetOutputPath().string().empty() && (GetOutputPath().string() != "I_FORGOT_TO_SET_A_PATH"));
+}
+
+/*
+# ========================================================================================= #
+#
+# ========================================================================================= #
+*/

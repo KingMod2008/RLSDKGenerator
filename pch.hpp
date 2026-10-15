@@ -1,0 +1,31 @@
+#pragma once
+#include <Windows.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <direct.h>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <stdio.h>
+#include <string>
+#include <vector>
+#include <filesystem>
+#include <vector>
+#include <map>
+#include <future>
+#include <thread>
+#include <mutex>
+#include <deque>
+#include <functional>
+#include <condition_variable>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <queue>
+#include <Psapi.h>
+#pragma comment(lib, "Psapi.lib")
+
+//#define NO_LOGGING
+#define NO_POPUPS
+#define ULTRA_FAST_FILE_REGEN
+#define SKIP_INSTANCE_DUMPS
